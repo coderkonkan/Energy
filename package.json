@@ -1,0 +1,15 @@
+{
+  "name": "waste2value-backend",
+  "version": "1.0.0",
+  "description": "Backend for Waste2Value Intelligence System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "lowdb": "^1.0.0"
+  }
+}

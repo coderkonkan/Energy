@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste2Value Intelligence System</title>
+    <meta name="description" content="AI-powered waste management and energy simulation system for smart cities.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar" id="main-nav">
+        <div class="nav-container">
+            <div class="logo" id="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C10 14.52 12 13 13 12"/></svg>
+                <span>Waste2Value</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item active" data-page="home" id="nav-home">Home</a></li>
+                <li><a href="#" class="nav-item" data-page="analyze" id="nav-analyze">Analyze Waste</a></li>
+                <li><a href="#" class="nav-item" data-page="dashboard" id="nav-dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-item" data-page="roles" id="nav-roles">Management</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-item dropdown-toggle" id="nav-edu">Education <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-page="edu-system">Waste System</a></li>
+                        <li><a href="#" data-page="edu-pollution">Pollution Effects</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="dropdown language-dropdown">
+                    <button class="lang-btn" id="lang-selector">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <span id="current-lang">English</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button data-lang="en">English</button></li>
+                        <li><button data-lang="hi">Hindi</button></li>
+                        <li><button data-lang="ta">Tamil</button></li>
+                        <li><button data-lang="kn">Kannada</button></li>
+                    </ul>
+                </div>
+                <button class="ai-trigger" id="ai-chat-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/></svg>
+                    <span>AI Assistant</span>
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main id="app-container">
+        <!-- Dynamic content will be injected here -->
+        <div class="loader-container" id="page-loader">
+            <div class="loader"></div>
+        </div>
+    </main>
+
+    <!-- AI Chat Overlay -->
+    <div class="ai-overlay" id="ai-overlay">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>Eco-Assistant</h3>
+                <button id="close-chat">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">Hello! I'm your Waste2Value assistant. How can I help you today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Ask about waste management...">
+                <button id="send-msg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
