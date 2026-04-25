@@ -12,7 +12,7 @@ RUN npm install --production
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 8080
 
 # Set environment variables
 ENV NODE_ENV=production
