@@ -9,7 +9,6 @@ const app = express();
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 
-// Initial database state
 db.defaults({ 
     requests: [], 
     simulations: [], 
@@ -22,12 +21,16 @@ db.defaults({
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname))); // Serve frontend files
+app.use(express.static(__dirname));
 
-// API: Requests
+// Root route fix
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// APIs...
 app.get('/api/requests', (req, res) => {
-    const requests = db.get('requests').value();
-    res.json(requests);
+    res.json(db.get('requests').value());
 });
 
 app.post('/api/requests', (req, res) => {
@@ -43,18 +46,16 @@ app.post('/api/requests', (req, res) => {
 });
 
 app.patch('/api/requests/:id', (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
     db.get('requests')
-      .find({ id: parseInt(id) })
-      .assign({ status })
+      .find({ id: parseInt(req.params.id) })
+      .assign({ status: req.body.status })
       .write();
     res.json({ success: true });
 });
 
-// API: Simulations
 app.post('/api/simulation', (req, res) => {
     const { power, energy, wasteType } = req.body;
+
     const newSim = {
         id: Date.now(),
         power,
@@ -62,27 +63,29 @@ app.post('/api/simulation', (req, res) => {
         wasteType,
         timestamp: new Date().toISOString()
     };
+
     db.get('simulations').push(newSim).write();
-    
-    // Update global stats
+
     const stats = db.get('stats').value();
     db.get('stats').assign({
-        totalWaste: stats.totalWaste + 0.1, // simulated increment
+        totalWaste: stats.totalWaste + 0.1,
         totalEnergy: stats.totalEnergy + parseFloat(energy),
-        totalCO2: stats.totalCO2 + (parseFloat(energy) * 0.2) // simulated CO2 saving
+        totalCO2: stats.totalCO2 + (parseFloat(energy) * 0.2)
     }).write();
-    
+
     res.status(201).json(newSim);
 });
 
 app.get('/api/stats', (req, res) => {
-    const stats = db.get('stats').value();
-    const simulations = db.get('simulations').takeRight(10).value();
-    res.json({ stats, simulations });
+    res.json({
+        stats: db.get('stats').value(),
+        simulations: db.get('simulations').takeRight(10).value()
+    });
 });
 
-// Start Server
-const PORT = process.env.PORT || 3000;
+// ✅ FIXED PORT
+const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
-    console.log(`Waste2Value Server running at http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
